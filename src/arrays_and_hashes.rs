@@ -1,4 +1,4 @@
-use std::{collections::HashMap, mem, result};
+use std::collections::HashMap;
 
 /**
  *   Problem 217. Contains Duplicate (Easy)
