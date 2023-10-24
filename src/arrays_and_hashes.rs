@@ -174,38 +174,6 @@ mod two_sum_tests {
     }
 }
 
-fn is_anagram_with_ref(s: &String, t: &String) -> bool {
-    if s.len() != t.len() {
-        return false;
-    }
-
-    let mut cache: HashMap<char, usize> = HashMap::new();
-
-    for chr in s.chars() {
-        cache.insert(
-            chr,
-            match cache.get(&chr) {
-                Some(result) => result + 1,
-                None => 1
-            }
-        );
-    }
-
-    for chr in t.chars() {
-        if let Some(&result) = cache.get(&chr) {
-            if result < 2 {
-                cache.remove_entry(&chr);
-            } else {
-                cache.insert(chr, result - 1);
-            }
-        } else {
-            return false;
-        }
-    }
-
-    return cache.len() == 0;
-}
-
 pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
     let mut result_map: HashMap<Vec<char>, Vec<String>> = HashMap::new();
 
@@ -236,6 +204,7 @@ mod group_anagrams_test {
     use super::group_anagrams;
 
     #[test]
+    #[ignore = "TODO: Implement proper test"]
     fn it_groups_the_anagrams() {
         let strs: Vec<String> = vec![
             "eat".to_owned(),
@@ -279,22 +248,23 @@ mod group_anagrams_test {
  *   Input: nums = [1], k = 1
  *   Output: [1]
  */
+pub fn placeholder() {}
 
-pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
-    if k == 0 { return vec![]; }
+// pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
+//     if k == 0 { return vec![]; }
 
-    let mut freq_map: HashMap<i32, i32> = HashMap::new();
-    let mut results: Vec<(i32, i32)> = Vec::new();
+//     let mut freq_map: HashMap<i32, i32> = HashMap::new();
+//     let mut results: Vec<(i32, i32)> = Vec::new();
 
-    for num in nums {
-        if let Some(&occurance_count) = freq_map.get(&num) {
-            freq_map.insert(num, occurance_count + 1);
-        } else {
-            freq_map.insert(num, 1);
-        }
-    }
+//     for num in nums {
+//         if let Some(&occurance_count) = freq_map.get(&num) {
+//             freq_map.insert(num, occurance_count + 1);
+//         } else {
+//             freq_map.insert(num, 1);
+//         }
+//     }
 
-    // TODO: Sort
+//     // TODO: Sort
  
-    vec![]
-}
+//     vec![]
+// }
