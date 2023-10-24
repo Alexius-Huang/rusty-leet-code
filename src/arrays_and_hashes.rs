@@ -173,3 +173,89 @@ mod two_sum_tests {
         assert_eq!(two_sum(vec![3, 3], 6), vec![0, 1]);              
     }
 }
+
+fn is_anagram_with_ref(s: &String, t: &String) -> bool {
+    if s.len() != t.len() {
+        return false;
+    }
+
+    let mut cache: HashMap<char, usize> = HashMap::new();
+
+    for chr in s.chars() {
+        thread
+        cache.insert(
+            chr,
+            match cache.get(&chr) {
+                Some(result) => result + 1,
+                None => 1
+            }
+        );
+    }
+
+    for chr in t.chars() {
+        if let Some(&result) = cache.get(&chr) {
+            if result < 2 {
+                cache.remove_entry(&chr);
+            } else {
+                cache.insert(chr, result - 1);
+            }
+        } else {
+            return false;
+        }
+    }
+
+    return cache.len() == 0;
+}
+
+/* TODO: Time limit exceeded... */
+pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
+    let mut results: Vec<Vec<String>> = vec![];
+
+    'each_string: for string in strs {
+        for (index, anagram_group) in results.iter().enumerate() {
+            if is_anagram_with_ref(&anagram_group[0], &string) {
+                results[index].push(string.clone());
+                continue 'each_string;
+            }
+        }
+
+        results.push(vec![string.clone()]);
+    }
+
+    results
+}
+
+#[cfg(test)]
+mod group_anagrams_test {
+    use crate::test_utils::are_string_vectors_similar;
+    use super::group_anagrams;
+
+    #[test]
+    fn it_groups_the_anagrams() {
+        let strs: Vec<String> = vec![
+            "eat".to_owned(),
+            "tea".to_owned(),
+            "tan".to_owned(),
+            "ate".to_owned(),
+            "nat".to_owned(),
+            "bat".to_owned()
+        ];
+
+        let result = group_anagrams(strs);
+
+        assert!(are_string_vectors_similar(
+            &result[0],
+            &vec!["eat".to_owned(), "tea".to_owned(), "ate".to_owned()]
+        ));
+        assert!(are_string_vectors_similar(
+            &result[1],
+            &vec!["tan".to_owned(), "nat".to_owned()]
+        ));
+        assert!(are_string_vectors_similar(
+            &result[2],
+            &vec!["bat".to_owned()]
+        ));
+
+        assert_eq!(result.len(), 3);
+    }
+}
