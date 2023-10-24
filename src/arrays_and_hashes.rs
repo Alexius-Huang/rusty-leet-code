@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, mem, result};
 
 /**
  *   Problem 217. Contains Duplicate (Easy)
@@ -182,7 +182,6 @@ fn is_anagram_with_ref(s: &String, t: &String) -> bool {
     let mut cache: HashMap<char, usize> = HashMap::new();
 
     for chr in s.chars() {
-        thread
         cache.insert(
             chr,
             match cache.get(&chr) {
@@ -207,22 +206,28 @@ fn is_anagram_with_ref(s: &String, t: &String) -> bool {
     return cache.len() == 0;
 }
 
-/* TODO: Time limit exceeded... */
 pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
-    let mut results: Vec<Vec<String>> = vec![];
+    let mut result_map: HashMap<Vec<char>, Vec<String>> = HashMap::new();
 
-    'each_string: for string in strs {
-        for (index, anagram_group) in results.iter().enumerate() {
-            if is_anagram_with_ref(&anagram_group[0], &string) {
-                results[index].push(string.clone());
-                continue 'each_string;
-            }
-        }
+    for string in strs {
+        let mut key = string.chars().collect::<Vec<char>>();
+        key.sort();
 
-        results.push(vec![string.clone()]);
+        /* Longer Version */
+        // if let Some(vec) = result_map.get_mut(&key) {
+        //     vec.push(string);
+        // } else {
+        //     result_map.insert(key, vec![string]);
+        // }
+
+        /* Concise Version */
+        result_map
+            .entry(key)
+            .or_insert(vec![])
+            .push(string);
     }
 
-    results
+    result_map.into_iter().map(|(_, data)| data).collect()
 }
 
 #[cfg(test)]
@@ -258,4 +263,38 @@ mod group_anagrams_test {
 
         assert_eq!(result.len(), 3);
     }
+}
+
+/**
+ *   Problem 347. Top K Frequent Element (Medium)
+ *   See: https://leetcode.com/problems/top-k-frequent-elements/
+ *   Given an integer array `nums` and an integer `k`, return the `k` most frequent elements.
+ *   You may return the answer in any order.
+ * 
+ *   Example 1:
+ *   Input: nums = [1,1,1,2,2,3], k = 2
+ *   Output: [1,2]
+ *   Example 2:
+ *   
+ *   Input: nums = [1], k = 1
+ *   Output: [1]
+ */
+
+pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
+    if k == 0 { return vec![]; }
+
+    let mut freq_map: HashMap<i32, i32> = HashMap::new();
+    let mut results: Vec<(i32, i32)> = Vec::new();
+
+    for num in nums {
+        if let Some(&occurance_count) = freq_map.get(&num) {
+            freq_map.insert(num, occurance_count + 1);
+        } else {
+            freq_map.insert(num, 1);
+        }
+    }
+
+    // TODO: Sort
+ 
+    vec![]
 }
