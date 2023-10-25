@@ -58,7 +58,7 @@ mod test {
             .into_iter()
             .map(|str| str.to_owned())
             .collect()
-    }    
+    }
 
     #[test]
     fn it_evaluates_reverse_polish_notation_correctly() {
