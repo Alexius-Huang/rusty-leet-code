@@ -1,3 +1,5 @@
+pub mod min_stack;
+
 /**
  *   Problem 20. Valid Parentheses
  *   See: https://leetcode.com/problems/valid-parentheses/
