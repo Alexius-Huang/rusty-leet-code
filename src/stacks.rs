@@ -1,4 +1,5 @@
 pub mod min_stack;
+pub mod reverse_polish_notation;
 
 /**
  *   Problem 20. Valid Parentheses
