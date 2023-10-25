@@ -1,3 +1,6 @@
+pub mod remove_duplicates;
+pub mod remove_element;
+
 use std::collections::HashMap;
 
 /**
