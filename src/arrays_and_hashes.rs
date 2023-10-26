@@ -1,5 +1,6 @@
 pub mod remove_duplicates;
 pub mod remove_element;
+pub mod top_k_frequent_elements;
 
 use std::collections::HashMap;
 
