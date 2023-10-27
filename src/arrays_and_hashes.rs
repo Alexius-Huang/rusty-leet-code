@@ -1,6 +1,7 @@
 pub mod remove_duplicates;
 pub mod remove_element;
 pub mod top_k_frequent_elements;
+pub mod valid_sudoku;
 
 use std::collections::HashMap;
 
