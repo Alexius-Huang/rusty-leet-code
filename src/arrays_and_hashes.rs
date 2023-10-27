@@ -3,6 +3,7 @@ pub mod remove_element;
 pub mod top_k_frequent_elements;
 pub mod valid_sudoku;
 pub mod encode_and_decode_string;
+pub mod longest_consecutive_sequence;
 
 use std::collections::HashMap;
 
