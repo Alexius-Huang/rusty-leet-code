@@ -1,9 +1,9 @@
+pub mod encode_and_decode_string;
+pub mod longest_consecutive_sequence;
 pub mod remove_duplicates;
 pub mod remove_element;
 pub mod top_k_frequent_elements;
 pub mod valid_sudoku;
-pub mod encode_and_decode_string;
-pub mod longest_consecutive_sequence;
 
 use std::collections::HashMap;
 
@@ -15,7 +15,7 @@ use std::collections::HashMap;
  *   Example 1:
  *   ```rust
  *   use rusty_leet_code::arrays_and_hashes as import;
- * 
+ *
  *   let input = vec![1, 2, 3, 4, 2];
  *   assert!(import::contains_duplicate(input));
  *   ```
@@ -23,7 +23,7 @@ use std::collections::HashMap;
  *   Example 2:
  *   ```rust
  *   use rusty_leet_code::arrays_and_hashes as import;
- * 
+ *
  *   let input = vec![1, 2, 3, 4, 5];
  *   assert!(!import::contains_duplicate(input));
  *   ```
@@ -31,7 +31,7 @@ use std::collections::HashMap;
  *   Example 3:
  *   ```rust
  *   use rusty_leet_code::arrays_and_hashes as import;
- * 
+ *
  *   let input = vec![1, 1, 1, 3, 3, 4, 3, 2, 4, 2];
  *   assert!(import::contains_duplicate(input));
  *   ```
@@ -70,20 +70,20 @@ mod contains_duplicate_tests {
  *   See: https://leetcode.com/problems/valid-anagram/
  *
  *   Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.
- * 
+ *
  *   An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
  *   
  *   Example 1:
  *   ```rust
  *   use rusty_leet_code::arrays_and_hashes as import;
- * 
+ *
  *   assert!(import::is_anagram("anagram".to_owned(), "nagaram".to_owned()));
  *   ```
- * 
+ *
  *   Example 2:
  *   ```rust
  *   use rusty_leet_code::arrays_and_hashes as import;
- * 
+ *
  *   assert!(!import::is_anagram("rat".to_owned(), "car".to_owned()));
  *   ```
  */
@@ -99,14 +99,16 @@ pub fn is_anagram(s: String, t: String) -> bool {
             chr,
             match cache.get(&chr) {
                 Some(result) => result + 1,
-                None => 1
-            }
+                None => 1,
+            },
         );
     }
 
     for chr in t.chars() {
         let result = cache.get(&chr);
-        if result.is_none() { return false; }
+        if result.is_none() {
+            return false;
+        }
 
         let result = *result.unwrap();
 
@@ -148,14 +150,14 @@ mod is_anagram_tests {
  *   Examples:
  *   ```rust
  *   use rusty_leet_code::arrays_and_hashes as import;
- * 
+ *
  *   assert_eq!(import::two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
  *   assert_eq!(import::two_sum(vec![3, 2, 4], 6), vec![1, 2]);
  *   assert_eq!(import::two_sum(vec![3, 3], 6), vec![0, 1]);
  *   ```
  */
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    // dict stores key as target, value is 
+    // dict stores key as target, value is
     let mut dict: HashMap<i32, usize> = HashMap::new();
 
     for (index, num) in nums.iter().enumerate() {
@@ -177,7 +179,7 @@ mod two_sum_tests {
     fn it_returns_array_of_indexs_which_sum_is_the_target() {
         assert_eq!(two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
         assert_eq!(two_sum(vec![3, 2, 4], 6), vec![1, 2]);
-        assert_eq!(two_sum(vec![3, 3], 6), vec![0, 1]);              
+        assert_eq!(two_sum(vec![3, 3], 6), vec![0, 1]);
     }
 }
 
@@ -196,10 +198,7 @@ pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
         // }
 
         /* Concise Version */
-        result_map
-            .entry(key)
-            .or_insert(vec![])
-            .push(string);
+        result_map.entry(key).or_insert(vec![]).push(string);
     }
 
     result_map.into_iter().map(|(_, data)| data).collect()
@@ -207,8 +206,8 @@ pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
 
 #[cfg(test)]
 mod group_anagrams_test {
-    use crate::test_utils::are_string_vectors_similar;
     use super::group_anagrams;
+    use crate::test_utils::are_string_vectors_similar;
 
     #[test]
     #[ignore = "TODO: Implement proper test"]
@@ -219,7 +218,7 @@ mod group_anagrams_test {
             "tan".to_owned(),
             "ate".to_owned(),
             "nat".to_owned(),
-            "bat".to_owned()
+            "bat".to_owned(),
         ];
 
         let result = group_anagrams(strs);
@@ -240,38 +239,3 @@ mod group_anagrams_test {
         assert_eq!(result.len(), 3);
     }
 }
-
-/**
- *   Problem 347. Top K Frequent Element (Medium)
- *   See: https://leetcode.com/problems/top-k-frequent-elements/
- *   Given an integer array `nums` and an integer `k`, return the `k` most frequent elements.
- *   You may return the answer in any order.
- * 
- *   Example 1:
- *   Input: nums = [1,1,1,2,2,3], k = 2
- *   Output: [1,2]
- *   Example 2:
- *   
- *   Input: nums = [1], k = 1
- *   Output: [1]
- */
-pub fn placeholder() {}
-
-// pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
-//     if k == 0 { return vec![]; }
-
-//     let mut freq_map: HashMap<i32, i32> = HashMap::new();
-//     let mut results: Vec<(i32, i32)> = Vec::new();
-
-//     for num in nums {
-//         if let Some(&occurance_count) = freq_map.get(&num) {
-//             freq_map.insert(num, occurance_count + 1);
-//         } else {
-//             freq_map.insert(num, 1);
-//         }
-//     }
-
-//     // TODO: Sort
- 
-//     vec![]
-// }

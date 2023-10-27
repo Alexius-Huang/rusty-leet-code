@@ -13,18 +13,18 @@
  *  - getMin() -> i32 retrieves the minimum element in the stack.
  *  
  *  You must implement a solution with O(1) time complexity for each function.
- * 
+ *
  */
 
 pub struct MinStack {
-    stack: Vec<(i32, i32)>
+    stack: Vec<(i32, i32)>,
 }
 
 impl MinStack {
     pub fn new() -> Self {
-        Self { stack: Vec::new() }        
+        Self { stack: Vec::new() }
     }
-    
+
     pub fn push(&mut self, val: i32) {
         if self.stack.len() == 0 {
             self.stack.push((val, val));
@@ -33,16 +33,13 @@ impl MinStack {
 
         let (_, min) = self.top_data();
 
-        self.stack.push((
-            val,
-            if val < min { val } else { min }
-        ));
+        self.stack.push((val, if val < min { val } else { min }));
     }
-    
+
     pub fn pop(&mut self) {
         self.stack.pop();
     }
-    
+
     pub fn top(&self) -> i32 {
         self.top_data().0
     }
@@ -50,7 +47,7 @@ impl MinStack {
     fn top_data(&self) -> (i32, i32) {
         self.stack[self.stack.len() - 1]
     }
-    
+
     pub fn get_min(&self) -> i32 {
         self.top_data().1
     }
@@ -68,7 +65,7 @@ mod test {
         min_stack.push(-3);
         assert_eq!(min_stack.get_min(), -3); // return -3
         min_stack.pop();
-        assert_eq!(min_stack.top(), 0);      // return 0
+        assert_eq!(min_stack.top(), 0); // return 0
         assert_eq!(min_stack.get_min(), -2); // return -2
     }
 }

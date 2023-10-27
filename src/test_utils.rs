@@ -1,17 +1,19 @@
 use std::collections::HashMap;
 
 pub fn are_string_vectors_similar(v1: &Vec<String>, v2: &Vec<String>) -> bool {
-    if v1.len() != v2.len() { return false }
+    if v1.len() != v2.len() {
+        return false;
+    }
 
     let mut hmap: HashMap<String, i32> = HashMap::new();
     for string in v1 {
         let string = string.clone();
         match hmap.get(&string) {
             None => hmap.insert(string, 1),
-            Some(&value) => hmap.insert(string, value + 1)
+            Some(&value) => hmap.insert(string, value + 1),
         };
     }
-    
+
     for string in v2 {
         let string = string.clone();
 
@@ -65,7 +67,12 @@ mod are_string_vectors_similar_test {
 
         assert!(!are_string_vectors_similar(
             &vec!["abc".to_owned(), "def".to_owned(), "ghi".to_owned()],
-            &vec!["ghi".to_owned(), "def".to_owned(), "abc".to_owned(), "xyz".to_owned()]
+            &vec![
+                "ghi".to_owned(),
+                "def".to_owned(),
+                "abc".to_owned(),
+                "xyz".to_owned()
+            ]
         ));
     }
 }

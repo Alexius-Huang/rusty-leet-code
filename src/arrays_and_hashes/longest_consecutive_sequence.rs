@@ -3,18 +3,18 @@ use std::collections::HashSet;
 /**
  *  Problem 128. Longest Consecutive Sequence
  *  See: https://leetcode.com/problems/longest-consecutive-sequence/
- * 
+ *
  *  Given an unsorted array of integers nums, return the length of
  *  the longest consecutive elements sequence.
  *  
  *  You must write an algorithm that runs in O(n) time.
  */
 pub fn run(nums: Vec<i32>) -> i32 {
-    if nums.len() == 0 { return 0; }
+    if nums.len() == 0 {
+        return 0;
+    }
 
-    let mut num_set: HashSet<i32> = HashSet::from_iter(
-        nums.iter().cloned()
-    );
+    let mut num_set: HashSet<i32> = HashSet::from_iter(nums.iter().cloned());
 
     let mut max_result = 0;
 
@@ -26,7 +26,9 @@ pub fn run(nums: Vec<i32>) -> i32 {
         let mut cur_target = num - 1;
         // search left
         loop {
-            if !num_set.contains(&cur_target) { break; }
+            if !num_set.contains(&cur_target) {
+                break;
+            }
 
             num_set.remove(&cur_target);
             cur_result += 1;
@@ -36,7 +38,9 @@ pub fn run(nums: Vec<i32>) -> i32 {
         // search right
         cur_target = num + 1;
         loop {
-            if !num_set.contains(&cur_target) { break; }
+            if !num_set.contains(&cur_target) {
+                break;
+            }
 
             num_set.remove(&cur_target);
             cur_result += 1;

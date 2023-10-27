@@ -4,10 +4,10 @@ use std::collections::HashSet;
  *  Problem 36. Valid Sudoku (Medium)
  *  See: https://leetcode.com/problems/valid-sudoku/
  *  Determine if a 9 x 9 Sudoku board is valid.
- * 
+ *
  *  Only the filled cells need to be validated according to the
  *  following rules:
- * 
+ *
  *  - Each row must contain the digits 1-9 without repetition.
  *  - Each column must contain the digits 1-9 without repetition.
  *  - Each of the nine 3 x 3 sub-boxes of the grid must contain the
@@ -17,7 +17,7 @@ use std::collections::HashSet;
  *  - A Sudoku board (partially filled) could be valid but is not
  *    necessarily solvable.
  *  - Only the filled cells need to be validated according to the
- *    mentioned rules. 
+ *    mentioned rules.
  */
 pub fn run(board: Vec<Vec<char>>) -> bool {
     let mut rows: Vec<HashSet<char>> = vec![];
@@ -35,11 +35,12 @@ pub fn run(board: Vec<Vec<char>>) -> bool {
 
             let chr = board[row][col];
 
-            if chr == '.' { continue; }
+            if chr == '.' {
+                continue;
+            }
 
-            if !rows[row].insert(chr) ||
-               !columns[col].insert(chr) ||
-               !grids[grid_index].insert(chr) {
+            if !rows[row].insert(chr) || !columns[col].insert(chr) || !grids[grid_index].insert(chr)
+            {
                 return false;
             }
         }
@@ -105,8 +106,8 @@ mod test {
             vec!['6', '.', '.', '1', '9', '5', '.', '.', '.'],
             vec!['.', '9', '8', '.', '.', '.', '.', '6', '.'],
             vec!['8', '.', '.', '.', '6', '.', '.', '.', '3'],
-            vec!['4', '.', '.', '2', '.', '3', '.', '.', '1'],  // <- Central grid
-            vec!['7', '.', '.', '.', '2', '.', '.', '.', '6'],  // <- duplicated with 2
+            vec!['4', '.', '.', '2', '.', '3', '.', '.', '1'], // <- Central grid
+            vec!['7', '.', '.', '.', '2', '.', '.', '.', '6'], // <- duplicated with 2
             vec!['.', '6', '.', '.', '.', '.', '2', '8', '.'],
             vec!['.', '.', '.', '4', '1', '9', '.', '.', '5'],
             vec!['.', '.', '.', '.', '8', '.', '.', '7', '9']

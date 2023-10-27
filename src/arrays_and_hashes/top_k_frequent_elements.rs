@@ -1,5 +1,19 @@
 use std::collections::HashMap;
 
+/**
+ *   Problem 347. Top K Frequent Element (Medium)
+ *   See: https://leetcode.com/problems/top-k-frequent-elements/
+ *   Given an integer array `nums` and an integer `k`, return the `k` most frequent elements.
+ *   You may return the answer in any order.
+ *
+ *   Example 1:
+ *   Input: nums = [1,1,1,2,2,3], k = 2
+ *   Output: [1,2]
+ *   Example 2:
+ *   
+ *   Input: nums = [1], k = 1
+ *   Output: [1]
+ */
 pub fn run(nums: Vec<i32>, k: i32) -> Vec<i32> {
     let mut freq_map = HashMap::new();
 
@@ -11,9 +25,7 @@ pub fn run(nums: Vec<i32>, k: i32) -> Vec<i32> {
         }
     }
 
-    let mut sorted = freq_map
-        .iter()
-        .collect::<Vec<(&i32, &i32)>>();
+    let mut sorted = freq_map.iter().collect::<Vec<(&i32, &i32)>>();
 
     sorted.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
 
@@ -44,10 +56,7 @@ pub fn solution_2(nums: Vec<i32>, k: i32) -> Vec<i32> {
     }
 
     for (k, v) in freq_map {
-        counts_map
-            .get_mut((v - 1) as usize)
-            .unwrap()
-            .push(k);
+        counts_map.get_mut((v - 1) as usize).unwrap().push(k);
     }
 
     let mut result = vec![];
@@ -75,17 +84,11 @@ mod test {
 
     #[test]
     fn it_returns_top_k_frequent_elements() {
-        assert_eq!(
-            run(vec![1, 1, 1, 2, 2, 3], 2),
-            vec![1, 2]
-        );
+        assert_eq!(run(vec![1, 1, 1, 2, 2, 3], 2), vec![1, 2]);
     }
 
     #[test]
     fn it_uses_bucket_sort() {
-        assert_eq!(
-            solution_2(vec![1, 1, 1, 2, 2, 3], 2),
-            vec![1, 2]
-        );
+        assert_eq!(solution_2(vec![1, 1, 1, 2, 2, 3], 2), vec![1, 2]);
     }
 }

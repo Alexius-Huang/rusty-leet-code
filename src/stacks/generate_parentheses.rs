@@ -1,22 +1,26 @@
 /**
  *  Problem 22. Generate Parentheses (Medium)
  *  See: https://leetcode.com/problems/generate-parentheses/
- * 
+ *
  *  Given n pairs of parentheses, write a function to generate all
  *  combinations of well-formed parentheses.
  */
-
-use std::{collections::HashMap, thread, time::{Instant, Duration}};
+use std::{
+    collections::HashMap,
+    thread,
+    time::{Duration, Instant},
+};
 
 pub fn run(n: i32) -> Vec<String> {
     let first_term = vec!["()".to_owned()];
-    if n == 1 { return first_term; }
+    if n == 1 {
+        return first_term;
+    }
 
-    let second_term = vec![
-        "(())".to_owned(),
-        "()()".to_owned()
-    ];
-    if n == 2 { return second_term; }
+    let second_term = vec!["(())".to_owned(), "()()".to_owned()];
+    if n == 2 {
+        return second_term;
+    }
 
     let mut nth_map: HashMap<i32, Vec<String>> = HashMap::new();
     nth_map.insert(1, first_term);
@@ -28,13 +32,9 @@ pub fn run(n: i32) -> Vec<String> {
 
         /* Building format (gen[n - 1]) and ()gen[n - 1]*/
         for string in prev_result {
-            ith_result.push(
-                format!("({})", string)
-            );
+            ith_result.push(format!("({})", string));
 
-            ith_result.push(
-                format!("(){}", string)
-            );
+            ith_result.push(format!("(){}", string));
         }
 
         /* Building format (gen[j])gen[k] */
@@ -46,9 +46,7 @@ pub fn run(n: i32) -> Vec<String> {
 
             for jth_string in jth_result {
                 for kth_string in kth_result {
-                    ith_result.push(
-                        format!("({}){}", jth_string, kth_string)
-                    );
+                    ith_result.push(format!("({}){}", jth_string, kth_string));
                 }
             }
         }
@@ -64,10 +62,7 @@ mod test {
     use super::*;
 
     fn to_string_vec(input: &mut Vec<&str>) -> Vec<String> {
-        input
-            .into_iter()
-            .map(|str| str.to_owned())
-            .collect()
+        input.into_iter().map(|str| str.to_owned()).collect()
     }
 
     #[test]
@@ -76,33 +71,66 @@ mod test {
 
         assert_eq!(run(2), to_string_vec(&mut vec!["(())", "()()"]));
 
-        assert_eq!(run(3), to_string_vec(&mut vec![
-            "((()))", "()(())", "(()())", "()()()", "(())()"
-        ]));
+        assert_eq!(
+            run(3),
+            to_string_vec(&mut vec!["((()))", "()(())", "(()())", "()()()", "(())()"])
+        );
 
-        assert_eq!(run(4), to_string_vec(&mut vec![
-            "(((())))", "()((()))", "(()(()))", "()()(())",
-            "((()()))", "()(()())", "(()()())", "()()()()",
-            "((())())", "()(())()", "(())(())", "(())()()",
-            "((()))()", "(()())()"
-        ]));
+        assert_eq!(
+            run(4),
+            to_string_vec(&mut vec![
+                "(((())))", "()((()))", "(()(()))", "()()(())", "((()()))", "()(()())", "(()()())",
+                "()()()()", "((())())", "()(())()", "(())(())", "(())()()", "((()))()", "(()())()"
+            ])
+        );
 
-        assert_eq!(run(5), to_string_vec(&mut vec![
-            "((((()))))", "()(((())))", "(()((())))",
-            "()()((()))", "((()(())))", "()(()(()))",
-            "(()()(()))", "()()()(())", "(((()())))",
-            "()((()()))", "(()(()()))", "()()(()())",
-            "((()()()))", "()(()()())", "(()()()())",
-            "()()()()()", "(((())()))", "()((())())",
-            "(()(())())", "()()(())()", "((())(()))",
-            "()(())(())", "((())()())", "()(())()()",
-            "(((()))())", "()((()))()", "((()())())",
-            "()(()())()", "(())((()))", "(())()(())",
-            "(())(()())", "(())()()()", "(())(())()",
-            "((()))(())", "((()))()()", "(()())(())",
-            "(()())()()", "(((())))()", "(()(()))()",
-            "((()()))()", "(()()())()", "((())())()"
-        ]));
+        assert_eq!(
+            run(5),
+            to_string_vec(&mut vec![
+                "((((()))))",
+                "()(((())))",
+                "(()((())))",
+                "()()((()))",
+                "((()(())))",
+                "()(()(()))",
+                "(()()(()))",
+                "()()()(())",
+                "(((()())))",
+                "()((()()))",
+                "(()(()()))",
+                "()()(()())",
+                "((()()()))",
+                "()(()()())",
+                "(()()()())",
+                "()()()()()",
+                "(((())()))",
+                "()((())())",
+                "(()(())())",
+                "()()(())()",
+                "((())(()))",
+                "()(())(())",
+                "((())()())",
+                "()(())()()",
+                "(((()))())",
+                "()((()))()",
+                "((()())())",
+                "()(()())()",
+                "(())((()))",
+                "(())()(())",
+                "(())(()())",
+                "(())()()()",
+                "(())(())()",
+                "((()))(())",
+                "((()))()()",
+                "(()())(())",
+                "(()())()()",
+                "(((())))()",
+                "(()(()))()",
+                "((()()))()",
+                "(()()())()",
+                "((())())()"
+            ])
+        );
     }
 }
 
@@ -112,7 +140,7 @@ mod test {
 struct Parentheses {
     result: String,
     remaining_open: u32,
-    remaining_close: u32
+    remaining_close: u32,
 }
 
 impl Parentheses {
@@ -120,7 +148,7 @@ impl Parentheses {
         Self {
             result: "(".to_owned(),
             remaining_open: remaining - 1,
-            remaining_close: remaining
+            remaining_close: remaining,
         }
     }
 
@@ -156,10 +184,11 @@ impl Parentheses {
 pub fn solution_2(n: i32) -> Vec<String> {
     fn parse_parentheses(p: Parentheses) -> Vec<String> {
         if p.remaining_open == 0 {
-            return vec![
-                if p.remaining_close == 0 { p.result }
-                else { p.finalize() }
-            ]
+            return vec![if p.remaining_close == 0 {
+                p.result
+            } else {
+                p.finalize()
+            }];
         }
 
         let mut result = parse_parentheses(p.push_opening());
@@ -171,18 +200,17 @@ pub fn solution_2(n: i32) -> Vec<String> {
         result
     }
 
-    parse_parentheses(
-        Parentheses::new(n as u32)
-    )
+    parse_parentheses(Parentheses::new(n as u32))
 }
 
 pub fn solution_3(n: i32) -> Vec<String> {
     fn parse_parentheses(p: Parentheses) -> Vec<String> {
         if p.remaining_open == 0 {
-            return vec![
-                if p.remaining_close == 0 { p.result }
-                else { p.finalize() }
-            ]
+            return vec![if p.remaining_close == 0 {
+                p.result
+            } else {
+                p.finalize()
+            }];
         }
 
         if !p.is_closable() {
@@ -207,9 +235,7 @@ pub fn solution_3(n: i32) -> Vec<String> {
         opening_result
     }
 
-    parse_parentheses(
-        Parentheses::new(n as u32)
-    )
+    parse_parentheses(Parentheses::new(n as u32))
 }
 
 // After experiment, thread version isn't faster than without thread
@@ -243,7 +269,7 @@ pub fn run_comparison(loop_time: i32, max_gen: i32) {
     }
 
     println!("Without Thread v.s. With Thread");
-    
+
     for i in 1..=max_gen {
         let without_thread = result_without_thread[i as usize - 1];
         let with_thread = result_with_thread[i as usize - 1];

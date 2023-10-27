@@ -1,10 +1,10 @@
 /**
- *  Problem 271. Encode and Decode String (Medium) 
+ *  Problem 271. Encode and Decode String (Medium)
  *  Design an algorithm to encode a list of strings to a string.
- * 
+ *
  *  The encoded string is then sent over the network and is decoded
  *  back to the original list of strings.
- * 
+ *
  *  Note:
  *  - The string may contain any possible characters out of 256 valid
  *    ascii characters. Your algorithm should be generalized enough
@@ -13,7 +13,7 @@
  *    Your encode and decode algorithms should be stateless.
  *  - Do not rely on any library method such as eval or serialize
  *    methods. You should implement your own encode/decode algorithm.
- * 
+ *
  *  One possible example is: "I:;Love:;Leet:;Code"
  */
 
@@ -23,9 +23,7 @@ pub fn encode(strings: Vec<String>) -> String {
     let mut result = String::new();
     for string in strings {
         let len = string.len();
-        result.push_str(
-            format!("{len}#{string}").as_str()
-        );
+        result.push_str(format!("{len}#{string}").as_str());
     }
 
     result
@@ -43,19 +41,17 @@ pub fn decode(strings: String) -> Vec<String> {
             '0'..='9' => num_string.push(chr),
             '#' => {
                 string_len = num_string.parse().unwrap();
-                result.push(
-                    strings[(index + 1)..(index + 1 + string_len)].to_owned()
-                );
+                result.push(strings[(index + 1)..(index + 1 + string_len)].to_owned());
 
                 num_string = String::new();
 
                 // Skip string_len - 1 iteration, the string_len iteration
                 // matches the next number
                 iter.nth(string_len - 1);
-            },
-            _ => panic!("Invalid token: expect number or ending delimiter `#`")
-        };        
-    } 
+            }
+            _ => panic!("Invalid token: expect number or ending delimiter `#`"),
+        };
+    }
 
     result
 }
