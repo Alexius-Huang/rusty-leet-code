@@ -4,6 +4,8 @@ pub mod remove_duplicates;
 pub mod remove_element;
 pub mod top_k_frequent_elements;
 pub mod valid_sudoku;
+pub mod product_except_self;
+pub mod sliding_window;
 
 use std::collections::HashMap;
 
