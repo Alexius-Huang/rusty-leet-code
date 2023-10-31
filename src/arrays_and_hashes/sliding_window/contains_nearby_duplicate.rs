@@ -15,16 +15,22 @@ pub fn run(nums: Vec<i32>, k: i32) -> bool {
 
     for i in 0..=k as usize {
         // Window is larger than array and all are distinct
-        if i == nums.len() { return false; }
+        if i == nums.len() {
+            return false;
+        }
 
         // Already contains duplicate during initialization
-        if !window.insert(nums[i]) { return true; }
+        if !window.insert(nums[i]) {
+            return true;
+        }
     }
 
     // Sliding window
     for i in ((k as usize) + 1)..len {
         window.remove(&nums[i - k as usize - 1]);
-        if !window.insert(nums[i]) { return true; }
+        if !window.insert(nums[i]) {
+            return true;
+        }
     }
 
     false

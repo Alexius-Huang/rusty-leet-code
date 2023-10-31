@@ -3,7 +3,7 @@
  *  See: https://leetcode.com/problems/product-of-array-except-self/
  *  Given an integer array nums, return an array answer such that answer[i]
  *  is equal to the product of all the elements of nums except nums[i].
- * 
+ *
  *  The product of any prefix or suffix of nums is guaranteed to fit in a
  *  32-bit integer.
  *  
@@ -13,8 +13,12 @@
  */
 pub fn run(nums: Vec<i32>) -> Vec<i32> {
     let len = nums.len();
-    if len == 0 { return vec![]; }
-    if len == 1 { return vec![0]; }
+    if len == 0 {
+        return vec![];
+    }
+    if len == 1 {
+        return vec![0];
+    }
 
     let mut prefix_product: Vec<i32> = vec![nums[0]];
     let mut postfix_product: Vec<i32> = vec![nums[len - 1]];
@@ -30,9 +34,7 @@ pub fn run(nums: Vec<i32>) -> Vec<i32> {
     let mut result = vec![postfix_product[len - 2]];
 
     for i in 1..(len - 1) {
-        result.push(
-            prefix_product[i - 1] * postfix_product[len - i - 2]
-        );
+        result.push(prefix_product[i - 1] * postfix_product[len - i - 2]);
     }
 
     result.push(prefix_product[len - 2]);
@@ -62,15 +64,9 @@ mod test {
 
     #[test]
     fn it_returns_array_of_product_result_without_self() {
-        assert_eq!(
-            run(vec![1, 2, 3, 4]),
-            vec![24, 12, 8, 6]
-        );
+        assert_eq!(run(vec![1, 2, 3, 4]), vec![24, 12, 8, 6]);
 
-        assert_eq!(
-            run(vec![-1, 1, 0, -3, 3]),
-            vec![0, 0, 9, 0, 0]
-        );
+        assert_eq!(run(vec![-1, 1, 0, -3, 3]), vec![0, 0, 9, 0, 0]);
     }
 
     #[test]

@@ -3,12 +3,14 @@ use std::collections::HashSet;
 /**
  *  Problem 3. Longest Substring without Repeating Characters (Medium)
  *  See: https://leetcode.com/problems/longest-substring-without-repeating-characters/
- * 
+ *
  *  Given a string `s`, find the length of the longest substring without
  *  repeating characters.
  */
 pub fn run(s: String) -> i32 {
-    if s.len() < 2 { return s.len() as i32; }
+    if s.len() < 2 {
+        return s.len() as i32;
+    }
 
     let mut left_index: usize = 0;
     let mut right_index: usize = 0;
@@ -28,7 +30,9 @@ pub fn run(s: String) -> i32 {
                 let left_index_char = chars[left_index];
                 left_index += 1;
 
-                if left_index_char == chr { break; }
+                if left_index_char == chr {
+                    break;
+                }
                 char_set.remove(&left_index_char);
             }
         }
